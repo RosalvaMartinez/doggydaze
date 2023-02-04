@@ -10,10 +10,14 @@
     <h3>Your Reviews:</h3>
 
     {{#each Reviews as |review|}}
-    <div class="row mb-2">
+    <div class= "card row mb-2">
       <div class="col-md-8">
-        <h4><a href="restaurant/{{restaurant_id}}">Restaurant:{{Restaurant.restaurant_name}} comment:{{description}} </a></h4>
-        <p>{{description}} {{id}}</p>
+        <a class="restaurants" href="/restaurant/{{review.Restaurant.id}}">
+        <h3>Restaurant Name: {{review.Restaurant.restaurant_name}}</h3>
+        </a>
+        <h4>Rating: {{rating}}/10 🐾's<h4>
+        <p>Posted on: {{format_date date_created}}</p>
+        <p>{{description}}</p>
       </div>
       <div class="col-md-4">
         {{!-- Will have an error if there arent any reviews to delete. Since it cant find any delete buttons to use.
@@ -23,6 +27,9 @@
     </div>
     {{/each}}
   </div>
+  {{else}}
+  <img src="https://i.imgflip.com/2/4rsexl.jpg" alt="its empty">
+  
   {{/if}}
 </div>
 

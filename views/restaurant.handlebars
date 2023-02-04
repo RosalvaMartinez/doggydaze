@@ -1,27 +1,60 @@
 <div class="text-center">
     <h2>{{restaurant_name}}</h2>
-    <p>RATING:{{Reviews.[0].rating}}</p>
+    <iframe
+      width="600"
+      height="450"
+      style="border:0"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC7zAtsP6T4gvbxxyZbASjxQjIKfdAlOcs&q={{restaurant_name}}+(Restaurant),San+Antonio+TX">
+    </iframe>
+    {{#if averageRating}}
+    <p>OVERALL RATING: {{averageRating}}/10 🐾's</p>
+    {{else}}
+    <p>No reviews yet, leave your own!</p>
+    {{/if}}
     {{!-- Render reviews --}}
     {{#if Reviews.length}}
     <div class="col-md-6 restaurant-list">
-        <h3>REVIEWS:</h3>
-         {{#each Reviews as |review|}}
-         <div class="card">
-            <p>
-                {{review.description}}
-                {{rating}}
-            </p>
-
-            <p>Created by {{User.name}} on {{format_date date_created}}</p>
-         </div>
-         {{/each}}
+        <h5>REVIEWS:</h5>
+        {{#each Reviews as |review|}}
+        <div class="card">
+            <p>"{{review.description}}"</p>
+            <p>Rating: {{rating}}/10 🐾's</p>
+            <p>Review left by {{User.name}} on {{format_date date_created}}</p>
+        </div>
+        {{/each}}
     </div>
     {{/if}}
+    {{#if logged_in}}
     <form class="new-review-form form">
         <div class="form-group">
             <label for="review">Write your review here:</label>
             <textarea class="form-input" id="review" name="review"></textarea>
         </div>
+        {{!-- slider --}}
+        <p>How dog friendly would you rate your experience here?</p>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+            <p>Rating: <span id="demo"></span>/10 🐾's</p>
+        </div>
+        {{!-- slider end --}}
         <button type="submit" class="btn btn-primary">Add Review!</button>
     </form>
+    {{else}}
+    <div>
+        <p>Log in to leave a review</p>
+    </div>
+    {{/if}}
 </div>
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
